@@ -8,16 +8,12 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
-      - name: Deploy via SFTP
-        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+      - name: Deploy via SCP
+        uses: appleboy/scp-action@v0.1.7
         with:
-          server: web.sourceforge.net
+          host: web.sourceforge.net
           username: notenrechner
           password: ${{ secrets.SF_PASSWORD }}
-          protocol: sftp
           port: 22
-          local-dir: ./
-          server-dir: /home/project-web/notenrechner-tipps/htdocs/
-          exclude: |
-            **/.github/**
-            **/.git*
+          source: "index.html,ihk-notenschluessel-nrw.html,ihk-pruefung-bestehen.html,style.css,sitemap.xml,robots.txt,google9af9e77d417aecee.html"
+          target: /home/project-web/notenrechner-tipps/htdocs/
