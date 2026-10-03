@@ -1,0 +1,23 @@
+name: Deploy to SourceForge
+
+on:
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Deploy via SFTP
+        uses: SamKirkland/FTP-Deploy-Action@v4.3.5
+        with:
+          server: web.sourceforge.net
+          username: notenrechner
+          password: ${{ secrets.SF_PASSWORD }}
+          protocol: sftp
+          port: 22
+          local-dir: ./
+          server-dir: /home/project-web/notenrechner-tipps/htdocs/
+          exclude: |
+            **/.github/**
+            **/.git*
